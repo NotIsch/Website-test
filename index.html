@@ -23,9 +23,27 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    h1 {
-      font-size: 46px;
-      margin-bottom: 40px;
+    h1 { font-size: 46px; margin-bottom: 40px; }
+
+    /* Login */
+    #loginDiv { max-width: 300px; margin-bottom: 40px; }
+    #loginDiv input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: var(--radius);
+      border: none;
+    }
+    #loginDiv button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #051022;
+      font-weight: 600;
+      cursor: pointer;
     }
 
     /* Left menu */
@@ -37,21 +55,16 @@
       box-shadow: var(--shadow);
       display: inline-block;
       vertical-align: top;
+      cursor: pointer;
     }
-
-    .menu-title {
-      font-size: 20px;
-      margin-bottom: 12px;
-    }
-
+    .menu-title { font-size: 20px; margin-bottom: 12px; }
     .submenu {
       margin-left: 10px;
       color: var(--muted);
-      transition: color .25s var(--ease);
+      display: none;
+      transition: color .25s cubic-bezier(.2,.9,.3,1);
     }
-    .submenu:hover {
-      color: #fff;
-    }
+    .submenu:hover { color: #fff; }
 
     /* Cheat sheet button */
     .cheat-btn {
@@ -64,26 +77,73 @@
       text-decoration: none;
       font-weight: 600;
       box-shadow: var(--shadow);
-      transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+      transition: transform .3s cubic-bezier(.2,.9,.3,1), box-shadow .3s cubic-bezier(.2,.9,.3,1);
     }
     .cheat-btn:hover {
       transform: translateY(-4px);
       box-shadow: 0 16px 40px rgba(0,0,0,0.6);
     }
   </style>
-<link rel="icon" type="image/png" href="data:image/png;base64,UklGRvQMAABXRUJQVlA4TOcMAAAv/8A/AB5LE0ApbuZ0C8y4tuzP+ixLE6YTMye/gJMTMzMz03Fzy5WZmZn5B+CJmVHqfu91z2tN"/>
 </head>
 <body>
-  <h1>Isch's Website</h1>
 
-  <div class="menu">
-    <div class="menu-title">Games ▾</div>
-    <div class="submenu">Phasmo</div>
+  <!-- Login System -->
+  <div id="loginDiv">
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
   </div>
 
-  <a class="cheat-btn" href="https://tybayn.github.io/phasmo-cheat-sheet" target="_blank">Cheat Sheet</a>
-  <div style="float:right; margin-top:-60px; margin-right:40px;">
-    <img src="data:image/png;base64,UklGRvQMAABXRUJQVlA4TOcMAAAv/8A/AB5LE0ApbuZ0C8y4tuzP+ixLE6YTMye/gJMTMzMz03Fzy5WZmZn5B+CJmVHqfu91z2tN" style="width:120px; height:120px; border-radius:50%; box-shadow:0 8px 24px rgba(0,0,0,0.5);" />
+  <div id="mainContent" style="display:none;">
+    <h1>Isch's Website</h1>
+
+    <div class="menu" onclick="toggleSubmenu()">
+      <div class="menu-title">Games ▾</div>
+      <div class="submenu">Phasmo</div>
+    </div>
+
+    <a class="cheat-btn" href="https://tybayn.github.io/phasmo-cheat-sheet" target="_blank">Cheat Sheet</a>
+
+    <div style="float:right; margin-top:-60px; margin-right:40px;">
+      <img src="data:image/png;base64,UklGRvQMAABXRUJQVlA4TOcMAAAv/8A/AB5LE0ApbuZ0C8y4tuzP+ixLE6YTMye/gJMTMzMz03Fzy5WZmZn5B+CJmVHqfu91z2tN"
+           style="width:120px; height:120px; border-radius:50%; box-shadow:0 8px 24px rgba(0,0,0,0.5);" />
+    </div>
   </div>
+
+  <script>
+    // SHA-256 hashing
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
+    async function login() {
+      const usernameInput = document.getElementById('username').value;
+      const passwordInput = document.getElementById('password').value;
+
+      // Replace these with your credentials
+      const correctUsername = 'admin';
+      const correctPasswordHash = 'ef92b778bafe771e89245b89ecbc2f7a6f6aab8b0c1a32cd182db11299a1d4a1'; // SHA-256 of 'password123'
+
+      const enteredPasswordHash = await hashPassword(passwordInput);
+
+      if(usernameInput === correctUsername && enteredPasswordHash === correctPasswordHash){
+        document.getElementById('loginDiv').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+      } else {
+        alert('Incorrect username or password!');
+      }
+    }
+
+    // Dropdown toggle
+    function toggleSubmenu() {
+      const submenu = document.querySelector('.submenu');
+      submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
 </body>
 </html>
