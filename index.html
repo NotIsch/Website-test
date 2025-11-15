@@ -1,43 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Basic Website</title>
-<style>
-body {
-font-family: Arial, sans-serif;
-margin: 40px;
-background-color: #f4f4f4;
-}
-header, footer {
-background-color: #fff;
-padding: 20px;
-border-radius: 8px;
-box-shadow: 0 0 10px rgba(0,0,0,0.1);
-margin-bottom: 20px;
-}
-main {
-background-color: #fff;
-padding: 20px;
-border-radius: 8px;
-box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sleek Dark Website</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --surface:#0f1720;
+      --muted:#98a0ac;
+      --accent:#7c5cff;
+      --glass: rgba(255,255,255,0.03);
+      --radius:16px;
+      --shadow: 0 6px 20px rgba(2,6,23,0.6);
+      --ease: cubic-bezier(.2,.9,.3,1);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,0.06), transparent), var(--bg);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:40px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    /* container */
+    .frame{
+      width:100%;
+      max-width:1100px;
+      border-radius:calc(var(--radius) + 4px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 360px 1fr;
+      gap:24px;
+      padding:28px;
+      transition: transform 450ms var(--ease), box-shadow 300ms var(--ease);
+    }
+    .frame:hover{transform: translateY(-6px)}
+
+    /* sidebar */
+    .sidebar{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
+      padding:18px;
+      border-radius: var(--radius);
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      min-height:360px;
+    }
+
+    .brand{
+      display:flex;align-items:center;gap:12px;
+    }
+    .logo{
+      width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#3fc1ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:#061018;box-shadow:0 6px 18px rgba(124,92,255,0.12);
+    }
+    h1{font-size:20px;margin:0}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+
+    nav{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+    .nav-item{
+      padding:10px 12px;border-radius:12px;color:var(--muted);display:flex;align-items:center;gap:10px;
+      transition: all 280ms var(--ease);cursor:pointer;font-size:14px;
+    }
+    .nav-item:hover{background:var(--glass);color:#fff;transform:translateX(6px)}
+    .nav-item.active{background:linear-gradient(90deg,rgba(124,92,255,0.14),rgba(63,193,255,0.06));color:#fff}
+
+    /* main content */
+    main{
+      display:flex;flex-direction:column;gap:18px;
+    }
+
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+    .search{
+      background:var(--surface);padding:10px 12px;border-radius:12px;display:flex;align-items:center;gap:8px;min-width:220px;transition: box-shadow 300ms var(--ease);
+    }
+    .search input{background:transparent;border:0;outline:none;color:inherit;font-size:14px}
+    .actions{display:flex;gap:10px;align-items:center}
+
+    .btn{
+      background:linear-gradient(90deg,var(--accent),#3fc1ff);
+      color:#051022;padding:10px 14px;border-radius:12px;border:0;font-weight:600;cursor:pointer;transition: transform 250ms var(--ease), box-shadow 250ms var(--ease);
+    }
+    .btn:active{transform:translateY(1px)}
+
+    /* cards */
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      padding:18px;border-radius:12px;box-shadow: 0 6px 18px rgba(2,6,23,0.45);transition: transform 320ms var(--ease), box-shadow 320ms var(--ease);
+    }
+    .card:hover{transform:translateY(-8px);box-shadow: 0 18px 40px rgba(2,6,23,0.6)}
+    .card h3{margin:0 0 8px 0}
+    .muted{color:var(--muted);font-size:13px}
+
+    /* small widgets */
+    .progress{height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),#3fc1ff);width:64%;transition: width 800ms var(--ease)}
+
+    /* responsive */
+    @media (max-width:900px){
+      .frame{grid-template-columns:1fr;}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
-<header>
-<h1>Welcome to My Website</h1>
-</header>
+  <div class="frame" role="main">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">SD</div>
+        <div>
+          <h1>SleekDark</h1>
+          <p class="lead">A minimal dark UI with smooth animations</p>
+        </div>
+      </div>
 
+      <nav aria-label="Primary">
+        <div class="nav-item active">Dashboard</div>
+        <div class="nav-item">Projects</div>
+        <div class="nav-item">Analytics</div>
+        <div class="nav-item">Settings</div>
+      </nav>
 
-<main>
-<p>This is a very basic HTML website. You can add more content here!</p>
-</main>
+      <div style="margin-top:auto">
+        <div class="muted" style="font-size:12px">Tip</div>
+        <div class="muted" style="font-size:13px">Hover cards and buttons for subtle motion.</div>
+      </div>
+    </aside>
 
+    <main>
+      <div class="topbar">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="search" role="search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/></svg>
+            <input placeholder="Search..." />
+          </div>
+          <div class="muted">Welcome back — here's what's new</div>
+        </div>
 
-<footer>
-<p>&copy; 2025 My Website</p>
-</footer>
+        <div class="actions">
+          <button class="btn">New Project</button>
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(90deg,#223, #112);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03)">A</div>
+        </div>
+      </div>
+
+      <section class="grid">
+        <article class="card">
+          <h3>Overview</h3>
+          <p class="muted">Quick stats and recent activity</p>
+          <div style="height:12px"></div>
+          <div class="progress" aria-hidden><i></i></div>
+        </article>
+
+        <article class="card">
+          <h3>Recent Projects</h3>
+          <p class="muted">Projects you're working on</p>
+          <ul style="margin-top:12px;padding-left:18px;color:var(--muted)">
+            <li>Landing page redesign</li>
+            <li>Mobile app concept</li>
+            <li>Marketing dashboard</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Activity</h3>
+          <p class="muted">Latest user events</p>
+          <div style="margin-top:12px;color:var(--muted);font-size:13px">No new notifications</div>
+        </article>
+
+        <article class="card">
+          <h3>Settings</h3>
+          <p class="muted">Customize your experience</p>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn">Appearance</button>
+            <button style="padding:10px 12px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)">Manage</button>
+          </div>
+        </article>
+      </section>
+
+      <footer style="display:flex;justify-content:space-between;align-items:center;padding-top:18px;color:var(--muted);font-size:13px">
+        <div>&copy; 2025 SleekDark</div>
+        <div>Made with ✨ and smooth animations</div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Small script to demo animation control (optional) -->
+  <script>
+    // Example: increase progress after load to show ease-in-out animation
+    window.addEventListener('DOMContentLoaded',()=>{
+      const bar = document.querySelector('.progress > i');
+      setTimeout(()=>{bar.style.width='86%';},300);
+    });
+  </script>
 </body>
 </html>
