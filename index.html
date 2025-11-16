@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | Isch's Website</title>
+<style>
+  :root{
+    --bg:#0b0f14; --surface:#101720; --accent:#7c5cff; --muted:#9aa2ad;
+    --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif;}
+  body{height:100vh; display:flex; justify-content:center; align-items:center; background:var(--bg); color:#e6eef6;}
+  .login-container{background:var(--surface); padding:30px; border-radius:var(--radius); box-shadow:var(--shadow); width:350px; text-align:center; transition:opacity .5s ease, transform .5s ease;}
+  h2{margin-bottom:20px;}
+  input{width:100%; padding:12px 14px; margin-bottom:12px; border-radius:10px; border:none; background:#071014; color:inherit; font-size:16px;}
+.pw-row {
+  display: flex;
+  gap: 10px;
+}
+
+.pw-input {
+  flex: 1;
+}
+
+#pass, .pw-toggle {
+  height: 44px;            /* same height for both */
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 0 12px;         /* vertical padding removed for consistency */
+  box-sizing: border-box;   /* ensures height includes padding */
+}
+
+.pw-toggle {
+  width: 70px;              /* smaller width */
+  background: #071014;
+  color: var(--muted);
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
+  #loginBtn{width:100%; padding:12px; border:none; border-radius:10px; background:linear-gradient(90deg,var(--accent),#3fc1ff); color:#051022; font-weight:800; cursor:pointer; margin-top:6px;}
+  #msg{color:#f88; display:none; margin-top:10px;}
+</style>
+</head>
+<body>
+
+<div class="login-container" id="loginContainer">
+  <h2>Sign In</h2>
+
+  <!-- Server-side login form -->
+  <form action="/login" method="POST" id="loginForm">
+    <input type="text" name="username" placeholder="Username" required>
+    <div class="pw-row">
+      <div class="pw-input">
+        <input type="password" name="password" id="pass" placeholder="Password" required>
+      </div>
+      <button type="button" id="toggle" class="pw-toggle">Show</button>
+    </div>
+    <button type="submit" id="loginBtn">Login</button>
+  </form>
+
+  <!-- Optional error message -->
+  <p id="msg">
+    Incorrect username or password
+    <!-- Display only if URL has ?error=1 -->
+  </p>
+</div>
+
+<script>
+  // Show/hide password
+  const toggleBtn = document.getElementById("toggle");
+  const pwInput = document.getElementById("pass");
+  toggleBtn.onclick = () => {
+    pwInput.type = pwInput.type === "password" ? "text" : "password";
+    toggleBtn.textContent = pwInput.type === "password" ? "Show" : "Hide";
+  };
+
+  // Display error if redirected with ?error=1
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("error") === "1"){
+    document.getElementById("msg").style.display="block";
+  }
+</script>
+
+</body>
+</html>

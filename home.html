@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isch's Website</title>
+<style>
+  :root{--bg:#0b0f14;--surface:#101720;--accent:#7c5cff;--muted:#9aa2ad;--radius:16px;--shadow:0 8px 28px rgba(0,0,0,.45);}
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif;}
+  body{background:var(--bg); color:#e6eef6; padding:40px; transition:opacity .8s ease; opacity:0;}
+  h1{font-size:46px;margin-bottom:40px;}
+  .menu{background:var(--surface);width:220px;padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer; margin-bottom:20px;}
+  .menu-title{font-size:20px;margin-bottom:12px;user-select:none;}
+  .submenu{margin-left:10px;color:var(--muted);display:block; cursor:pointer;}
+  .submenu:hover{color:#fff;}
+  .cheat-btn{
+    display:none;
+    margin-top:12px;
+    padding:14px 26px;
+    font-size:20px;
+    background:linear-gradient(90deg,var(--accent),#3fc1ff);
+    color:#051022;
+    border-radius:var(--radius);
+    text-decoration:none;
+    font-weight:600;
+    box-shadow:0 8px 28px rgba(0,0,0,.45);
+    opacity:0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(10px);
+  }
+  .cheat-btn.show{
+    display:inline-block;
+    opacity:1;
+    transform: translateY(0);
+  }
+  #logoutBtn{position:fixed;top:20px;right:20px;padding:10px 16px;border:none;border-radius:10px;background:linear-gradient(90deg,var(--accent),#3fc1ff);color:#051022;font-weight:700;cursor:pointer;}
+  .profile{float:right;margin-top:-60px;margin-right:40px;}
+  .profile img{width:120px;height:120px;border-radius:50%;box-shadow:0 8px 24px rgba(0,0,0,0.5);}
+  @media(max-width:700px){body{padding:20px;}.menu{width:100%;margin-bottom:20px;}.profile{float:none;margin:20px auto;text-align:center;}}
+</style>
+</head>
+<body>
+
+<h1>Isch's Website</h1>
+
+<div class="menu">
+  <div class="menu-title">Games ▾</div>
+  <div class="submenu" onclick="showCheat()">Phasmo</div>
+</div>
+
+<a id="cheatBtn" class="cheat-btn" href="https://tybayn.github.io/phasmo-cheat-sheet" target="_blank">Cheat Sheet</a>
+
+<div class="profile">
+  <img src="profile.png" alt="Profile Image"> <!-- Replace with your image -->
+</div>
+
+<button id="logoutBtn" onclick="location.href='/logout'">Logout</button>
+
+<script>
+  // Smooth fade-in for page
+  window.onload = () => { document.body.style.opacity="1"; };
+
+  // Show cheat sheet button with fade & slide
+  function showCheat(){
+    const btn = document.getElementById('cheatBtn');
+    btn.classList.add('show');
+  }
+</script>
+
+</body>
+</html>
