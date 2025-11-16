@@ -3,68 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Isch's Website</title>
+<title>Isch’s Website</title>
 <style>
-  :root{--bg:#0b0f14;--surface:#101720;--accent:#7c5cff;--muted:#9aa2ad;--radius:16px;--shadow:0 8px 28px rgba(0,0,0,.45);}
-  *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif;}
-  body{background:var(--bg); color:#e6eef6; padding:40px; transition:opacity .8s ease; opacity:0;}
-  h1{font-size:46px;margin-bottom:40px;}
-  .menu{background:var(--surface);width:220px;padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer; margin-bottom:20px;}
-  .menu-title{font-size:20px;margin-bottom:12px;user-select:none;}
-  .submenu{margin-left:10px;color:var(--muted);display:block; cursor:pointer;}
-  .submenu:hover{color:#fff;}
-  .cheat-btn{
-    display:none;
-    margin-top:12px;
-    padding:14px 26px;
-    font-size:20px;
-    background:linear-gradient(90deg,var(--accent),#3fc1ff);
-    color:#051022;
-    border-radius:var(--radius);
-    text-decoration:none;
-    font-weight:600;
-    box-shadow:0 8px 28px rgba(0,0,0,.45);
-    opacity:0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    transform: translateY(10px);
-  }
-  .cheat-btn.show{
-    display:inline-block;
-    opacity:1;
-    transform: translateY(0);
-  }
-  #logoutBtn{position:fixed;top:20px;right:20px;padding:10px 16px;border:none;border-radius:10px;background:linear-gradient(90deg,var(--accent),#3fc1ff);color:#051022;font-weight:700;cursor:pointer;}
-  .profile{float:right;margin-top:-60px;margin-right:40px;}
-  .profile img{width:120px;height:120px;border-radius:50%;box-shadow:0 8px 24px rgba(0,0,0,0.5);}
-  @media(max-width:700px){body{padding:20px;}.menu{width:100%;margin-bottom:20px;}.profile{float:none;margin:20px auto;text-align:center;}}
+:root {
+  --bg: #0b0f14;
+  --surface: #101720;
+  --accent: #7c5cff;
+  --radius: 16px;
+  --shadow: 0 8px 28px rgba(0,0,0,0.45);
+}
+
+/* Global */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: Inter, Arial, sans-serif; }
+body { background: var(--bg); color: #e6eef6; display: flex; flex-direction: column; min-height: 100vh; opacity: 0; transition: opacity 0.7s ease; }
+
+/* Top bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  flex-wrap: wrap;
+}
+.site-name { font-size: 32px; font-weight: 700; }
+.top-right { display: flex; align-items: center; gap: 15px; }
+#profileImg { width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+#logoutBtn { padding: 8px 14px; border: none; border-radius: 10px; background: linear-gradient(90deg,var(--accent),#3fc1ff); color: #051022; font-weight: 700; cursor: pointer; }
+
+/* Main content */
+.main-content {
+  display: flex;
+  gap: 20px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Left/Right wrappers */
+.left { flex: 4; display: flex; }
+.right { flex: 2; display: flex; flex-direction: column; }
+
+/* Cards */
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+}
+
+.card-content {
+  padding: 20px;
+  border-radius: var(--radius);
+  background: #1f2433; /* slightly lighter than main bg */
+  flex: 1; /* fill card height */
+  opacity: 0;
+  transform: scale(0.95);
+  animation: fadeInScale 0.6s forwards;
+}
+
+/* Animation delays */
+.desc .card-content { animation-delay: 0.2s; }
+.apps .card-content { animation-delay: 0.4s; }
+
+/* App list items */
+.apps ul { list-style: disc inside; }
+.apps li {
+  margin-bottom: 10px;
+  color: #cfd6e3;
+  padding: 6px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInItem 0.5s forwards;
+}
+.apps li:nth-child(1) { animation-delay: 0.6s; }
+.apps li:nth-child(2) { animation-delay: 0.8s; }
+.apps li:nth-child(3) { animation-delay: 1s; }
+
+/* Animations */
+@keyframes fadeInScale {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeInItem {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .main-content { flex-direction: column; }
+  .left, .right { flex: 0 0 100%; }
+  #profileImg { width: 50px; height: 50px; }
+  #logoutBtn { padding: 6px 12px; }
+}
 </style>
 </head>
 <body>
 
-<h1>Isch's Website</h1>
-
-<div class="menu">
-  <div class="menu-title">Games ▾</div>
-  <div class="submenu" onclick="showCheat()">Phasmo</div>
+<div class="top-bar">
+  <div class="site-name">Isch’s Website</div>
+  <div class="top-right">
+    <img id="profileImg" src="https://raw.githubusercontent.com/NotIsch/Website-test/refs/heads/main/my_dc_pfp.png" />
+    <button id="logoutBtn">Logout</button>
+  </div>
 </div>
 
-<a id="cheatBtn" class="cheat-btn" href="https://tybayn.github.io/phasmo-cheat-sheet" target="_blank">Cheat Sheet</a>
+<div class="main-content">
+  <!-- Left 4/6ths -->
+  <div class="left">
+    <div class="desc card">
+      <div class="card-content">
+        <p>
+          Hello! I’m Isch, a passionate developer and gamer.<br>
+          I love creating sleek, modern websites and experimenting with new technologies.<br>
+          Welcome to my personal page! Here you can see some of the apps and projects I have worked on.
+        </p>
+      </div>
+    </div>
+  </div>
 
-<div class="profile">
-  <img src="profile.png" alt="Profile Image"> <!-- Replace with your image -->
+  <!-- Right 2/6ths -->
+<div class="right">
+  <div class="apps card">
+    <div class="card-content">
+      <h2>My Apps</h2>
+      <ul>
+        <li>Timer</li>
+        <li>Calculator</li>
+        <li>Portfolio Website</li>
+      </ul>
+    </div>
+  </div>
 </div>
-
-<button id="logoutBtn" onclick="location.href='/logout'">Logout</button>
 
 <script>
-  // Smooth fade-in for page
-  window.onload = () => { document.body.style.opacity="1"; };
+// Fade in body
+window.onload = () => document.body.style.opacity = "1";
 
-  // Show cheat sheet button with fade & slide
-  function showCheat(){
-    const btn = document.getElementById('cheatBtn');
-    btn.classList.add('show');
-  }
+// Check token
+const token = sessionStorage.getItem("token");
+if (!token) window.location.href = "index.html";
+
+// Verify token with API
+fetch("https://loginapi-hp9k.onrender.com/api/protected", {
+  headers: { Authorization: "Bearer " + token }
+})
+.then(res => { if (!res.ok) window.location.href = "index.html"; });
+
+// Logout
+document.getElementById("logoutBtn").onclick = () => {
+  sessionStorage.removeItem("token");
+  window.location.href = "index.html";
+};
 </script>
 
 </body>
